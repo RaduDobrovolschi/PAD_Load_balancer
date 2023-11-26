@@ -1,0 +1,25 @@
+app:
+  enable-caching: true
+
+server:
+  port : 6968
+
+spring:
+  cloud:
+    discovery:
+      client:
+        simple:
+          instances:
+            service1:
+            - instance-id: 0
+              port: 8080
+              host: localhost
+              secure: false
+            - instance-id: 1
+              port: 8081
+              host: localhost
+              secure: false
+            - instance-id: 2
+              port: 8082
+              host: localhost
+              secure: false

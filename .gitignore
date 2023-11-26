@@ -1,0 +1,3 @@
+startup/Docker/all/data/**
+startup/Docker/mongo/data/**
+*.iml
