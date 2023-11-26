@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose-windows-amd64.exe convert --volumes hostPath
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: info1
+  name: info1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: info1
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose-windows-amd64.exe convert --volumes hostPath
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/kompose-default: "true"
+        io.kompose.service: info1
+    spec:
+      containers:
+        - env:
+            - name: SERVER_PORT
+              value: "8080"
+            - name: SPRING_DATA_MONGODB_URI
+              value: mongodb://mongo-0.mongo.default.svc.cluster.local:27017/mydatabase
+          image: registry.hub.docker.com/radudob/pad_info
+          name: info1
+          ports:
+            - containerPort: 8080
+              hostPort: 8080
+              protocol: TCP
+          resources: {}
+      restartPolicy: Always
+status: {}

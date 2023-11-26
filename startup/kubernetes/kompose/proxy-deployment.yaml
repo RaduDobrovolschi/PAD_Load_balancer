@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose-windows-amd64.exe convert --volumes hostPath
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: proxy
+  name: proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: proxy
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose-windows-amd64.exe convert --volumes hostPath
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/kompose-default: "true"
+        io.kompose.service: proxy
+    spec:
+      containers:
+        - env:
+            - name: APP_ENABLE_CACHING
+              value: "false"
+            - name: SERVER_PORT
+              value: "6969"
+            - name: SPRING_CLOUD_DISCOVERY_CLIENT_SIMPLE_INSTANCES_SERVICE1_0_HOST
+              value: info1
+            - name: SPRING_CLOUD_DISCOVERY_CLIENT_SIMPLE_INSTANCES_SERVICE1_0_INSTANCE_ID
+              value: "0"
+            - name: SPRING_CLOUD_DISCOVERY_CLIENT_SIMPLE_INSTANCES_SERVICE1_0_PORT
+              value: "8080"
+            - name: SPRING_CLOUD_DISCOVERY_CLIENT_SIMPLE_INSTANCES_SERVICE1_0_SECURE
+              value: "false"
+            - name: SPRING_CLOUD_DISCOVERY_CLIENT_SIMPLE_INSTANCES_SERVICE1_1_HOST
+              value: info2
+            - name: SPRING_CLOUD_DISCOVERY_CLIENT_SIMPLE_INSTANCES_SERVICE1_1_INSTANCE_ID
+              value: "1"
+            - name: SPRING_CLOUD_DISCOVERY_CLIENT_SIMPLE_INSTANCES_SERVICE1_1_PORT
+              value: "8081"
+            - name: SPRING_CLOUD_DISCOVERY_CLIENT_SIMPLE_INSTANCES_SERVICE1_1_SECURE
+              value: "false"
+            - name: SPRING_CLOUD_DISCOVERY_CLIENT_SIMPLE_INSTANCES_SERVICE1_2_HOST
+              value: info3
+            - name: SPRING_CLOUD_DISCOVERY_CLIENT_SIMPLE_INSTANCES_SERVICE1_2_INSTANCE_ID
+              value: "2"
+            - name: SPRING_CLOUD_DISCOVERY_CLIENT_SIMPLE_INSTANCES_SERVICE1_2_PORT
+              value: "8082"
+            - name: SPRING_CLOUD_DISCOVERY_CLIENT_SIMPLE_INSTANCES_SERVICE1_2_SECURE
+              value: "false"
+          image: registry.hub.docker.com/radudob/pad_proxy
+          name: proxy
+          ports:
+            - containerPort: 6969
+              hostPort: 6969
+              protocol: TCP
+          resources: {}
+      restartPolicy: Always
+status: {}

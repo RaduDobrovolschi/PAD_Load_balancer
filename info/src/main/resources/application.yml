@@ -5,4 +5,4 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:30001/mydatabase
+      uri: mongodb://10.111.173.234:27017/mydatabase
